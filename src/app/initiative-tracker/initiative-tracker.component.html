@@ -3,47 +3,54 @@
   <hr />
 
   <div class="card" style="width: 40rem;">
-      <div class="card-body">
-        <h4 class="card-title">Round: {{round}}</h4>
-        <p ngDefaultControl contenteditable="true" class="card-text">Notes...</p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <div *ngFor="let line of initiativeLines; let i = index" (click)="toggleMonster(i)">
-          <li class="list-group-item align-items-center" [ngClass] = "{ 'list-group-item-danger' : line.isMonster, 'active-character' : i == activeLine }">
-            <button (click)="delete(i)" type="button" class="btn btn-outline-danger"><i class="fas fa-times"></i></button>
-            <button (click)="duplicate(i); $event.stopPropagation()" type="button" class="btn btn-outline-secondary"><i class="far fa-copy"></i></button>
-            <span *ngIf="editInitiative" class="badge badge-primary"><i class="fab fa-first-order"></i> <input [value]="line.initiative" (blur)="assignInitiative(i, $event.target.value)" (click)="$event.stopPropagation()" style="width: 20px;"></span>
-            <span *ngIf="line.isMonster" class="badge badge-danger"><i class="fas fa-heart"></i> <input [value]="line.health" (input)="line.health = $event.target.value" (click)="$event.stopPropagation()" style="width: 30px;"></span>
-            <input [value]="line.name" (input)="line.name = $event.target.value" (click)="$event.stopPropagation()">
-            <button (click)="addCondition(i); $event.stopPropagation()" type="button" class="btn btn-outline-primary float-right"><i class="fas fa-plus"></i></button>
-          </li>
-          <div *ngFor="let condition of line.conditions; let j = index">
-            <li class="list-group-item align-items-center condition">
-                <button (click)="deleteCondition(i, j); $event.stopPropagation()" type="button" class="btn btn-outline-danger"><i class="fas fa-times"></i></button>
-                <input [value]="condition.name" (input)="condition.name = $event.target.value" (click)="$event.stopPropagation()">
-                <input [value]="condition.rounds" (input)="condition.rounds = $event.target.value" (click)="$event.stopPropagation()">
-            </li>
-          </div>
-        </div>
-        <a (click)="add()" href="javascript:void(0)" class="list-group-item">+ Add Line</a>
-      </ul>
-      <div class="card-body">
-        <a (click)="initiativeLines=[]" href="javascript:void(0)" class="card-link">Clear All</a>
-      </div>
-      <div class="card-footer">
-        <label class="form-check-label">
-          <input type="checkbox" class="form-check-input" [(ngModel)]="editInitiative">
-          Edit Initiative
-        </label>
-        <a (click)="forward()" href="javascript:void(0)" class="card-link float-right" style="margin-left: 10px;"><i class="fas fa-chevron-right"></i></a>
-        <a (click)="back()" href="javascript:void(0)" class="card-link float-right"><i class="fas fa-chevron-left"></i></a>
-      </div>
+    <div class="card-body">
+      <a (click)="copy()" href="javascript:void(0)" class="card-link float-right"><i class="far fa-copy"></i></a>
+      <h4 class="card-title">Round: {{round}}</h4>
+      <p ngDefaultControl contenteditable="true" class="card-text">Notes...</p>
     </div>
+    <ul class="list-group list-group-flush">
+      <div *ngFor="let line of initiativeLines; let i = index" (click)="toggleMonster(i)">
+        <li class="list-group-item align-items-center" [ngClass] = "{ 'list-group-item-danger' : line.isMonster, 'active-character' : i == activeLine }">
+          <button (click)="delete(i)" type="button" class="btn btn-outline-danger"><i class="fas fa-times"></i></button>
+          <button (click)="duplicate(i); $event.stopPropagation()" type="button" class="btn btn-outline-secondary"><i class="far fa-copy"></i></button>
+          <span *ngIf="editInitiative" class="badge badge-primary"><i class="fab fa-first-order"></i> <input [value]="line.initiative" (blur)="assignInitiative(i, $event.target.value)" (click)="$event.stopPropagation()" style="width: 20px;"></span>
+          <span *ngIf="line.isMonster" class="badge badge-danger"><i class="fas fa-heart"></i> <input [value]="line.health" (input)="line.health = $event.target.value" (click)="$event.stopPropagation()" style="width: 30px;"></span>
+          <input [value]="line.name" (input)="line.name = $event.target.value" (click)="$event.stopPropagation()">
+          <button (click)="addCondition(i); $event.stopPropagation()" type="button" class="btn btn-outline-primary float-right"><i class="fas fa-plus"></i></button>
+        </li>
+        <div *ngFor="let condition of line.conditions; let j = index">
+          <li class="list-group-item align-items-center condition">
+              <button (click)="deleteCondition(i, j); $event.stopPropagation()" type="button" class="btn btn-outline-danger"><i class="fas fa-times"></i></button>
+              <input [value]="condition.name" (input)="condition.name = $event.target.value" (click)="$event.stopPropagation()">
+              <input [value]="condition.rounds" (input)="condition.rounds = $event.target.value" (click)="$event.stopPropagation()">
+          </li>
+        </div>
+      </div>
+      <a (click)="add()" href="javascript:void(0)" class="list-group-item">+ Add Line</a>
+    </ul>
+    <div class="card-body">
+      <a (click)="initiativeLines=[]" href="javascript:void(0)" class="card-link">Clear All</a>
+    </div>
+    <div class="card-footer">
+      <label class="form-check-label">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="editInitiative">
+        Edit Initiative
+      </label>
+      <a (click)="forward()" href="javascript:void(0)" class="card-link float-right" style="margin-left: 10px;"><i class="fas fa-chevron-right"></i></a>
+      <a (click)="back()" href="javascript:void(0)" class="card-link float-right"><i class="fas fa-chevron-left"></i></a>
+    </div>
+  </div>
 
-    <hr />
+  <hr />
 
-    <samp>
-      {{initiativeLinesDisplay()}}
-    </samp>
+  <div *ngIf="displayCopy">
+    <textarea id="copyTextarea" [value]="displayCopy"></textarea>
+  </div>
+
+  <hr />
+
+  <samp>
+    {{initiativeLinesDisplay()}}
+  </samp>
 
 </div>

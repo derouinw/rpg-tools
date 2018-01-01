@@ -18,6 +18,8 @@ export class InitiativeTrackerComponent implements OnInit {
 
   round = 1;
 
+  displayCopy: string = null
+
   constructor() { }
 
   ngOnInit() {
@@ -75,6 +77,29 @@ export class InitiativeTrackerComponent implements OnInit {
     if (this.activeLine < 0) {
       this.activeLine = this.initiativeLines.length-1;
       this.round -= 1;
+    }
+  }
+
+  copy = () => {
+    if (this.displayCopy) {
+      this.displayCopy = null;
+      return;
+    }
+  
+    this.displayCopy = "";
+
+    for (let row of this.initiativeLines) {
+      this.displayCopy += row.name + " ";
+
+      if (row.isMonster) {
+        this.displayCopy += row.health.toString() + " ";
+      }
+
+      for (let condition of row.conditions) {
+        this.displayCopy += condition.name + " " + condition.rounds + "  ";
+      }
+
+      this.displayCopy += "\n";
     }
   }
 
