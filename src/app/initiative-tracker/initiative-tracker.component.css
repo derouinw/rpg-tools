@@ -1,0 +1,21 @@
+
+li.add-item {
+    height: 10px;
+    background-color: #CCC;
+}
+
+.list-group-item.active-character {
+    border: 1px solid #000;
+}
+
+.list-group-item .badge {
+    height: 30px;
+    vertical-align: middle;
+}
+
+.badge input {
+    margin-top: 3px;
+    background-color: #fff4;
+    border: none;
+    color: #fff;
+}
