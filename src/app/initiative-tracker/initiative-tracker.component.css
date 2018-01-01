@@ -4,8 +4,13 @@ li.add-item {
     background-color: #CCC;
 }
 
+li.condition {
+    color: #999;
+    background-color: #eee;
+}
+
 .list-group-item.active-character {
-    border: 1px solid #000;
+    border: 1px solid #666;
 }
 
 .list-group-item .badge {

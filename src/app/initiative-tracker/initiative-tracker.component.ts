@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { InitiativeLine } from '../model/initiativeLine';
+import { InitiativeLine, Condition } from '../model/initiativeLine';
 import { makeDecorator } from '@angular/core/src/util/decorators';
 
 @Component({
@@ -25,13 +25,7 @@ export class InitiativeTrackerComponent implements OnInit {
   }
 
   add = (index: number) => {
-    let newLine = <InitiativeLine>{ 
-      name: "New", 
-      health: 0, 
-      isMonster: true, 
-      initiative: 0,
-      initiativeStr: "0"
-    };
+    let newLine = new InitiativeLine();
 
     if (!index)
       return this.initiativeLines.push(newLine)
@@ -39,18 +33,38 @@ export class InitiativeTrackerComponent implements OnInit {
     this.initiativeLines.splice(index+1, 0, newLine);
   }
 
+  addCondition = (index: number) => {
+    let newCondition = new Condition();
+
+    this.initiativeLines[index].conditions.push(newCondition);
+  }
+
   assignInitiative = (index: number, value: string) => {
     var numberValue = parseInt(value);
+    var activeLine = this.initiativeLines[index];
+    activeLine.initiativeStr = value;
     
     // modifier -> roll a 20
-    if (value.startsWith("+") || value.startsWith("-")) {
-      numberValue = Math.floor(Math.random() * 20) + 1 + numberValue;
+    var modIndex = value.indexOf("+");
+    if (modIndex == -1) {
+      modIndex = value.indexOf("-");
     }
 
-    this.initiativeLines[index].initiative = numberValue;
-    this.initiativeLines[index].initiativeStr = value;
+    if (modIndex == 0) {
+      // +mod only
+      numberValue = Math.floor(Math.random() * 20) + 1 + numberValue;
+    } else if (modIndex != -1) {
+      // value+mod
+      activeLine.initiativeStr = value.substr(modIndex);
+    }
+
+    activeLine.initiative = numberValue;
 
     this.initiativeLines = this.initiativeLines.sort((a, b) => {
+      if (a.initiative == b.initiative) {
+        return parseInt(b.initiativeStr) - parseInt(a.initiativeStr);
+      }
+
       return b.initiative - a.initiative;
     });
   }
@@ -68,24 +82,13 @@ export class InitiativeTrackerComponent implements OnInit {
     this.initiativeLines.splice(index, 1);
   }
 
+  deleteCondition = (index: number, conditionIndex: number) => {
+    this.initiativeLines[index].conditions.splice(conditionIndex, 1);
+  }
+
   duplicate = (index: number) => {
     let line = this.initiativeLines[index];
-    
-    let newLine = <InitiativeLine>{ 
-      name: line.name, 
-      health: line.health, 
-      isMonster: line.isMonster, 
-      initiative: line.initiative,
-      initiativeStr: line.initiativeStr
-    };
-
-    // increment number
-    var nameParts = line.name.split(' ');
-    let nameNumber = parseInt(nameParts[nameParts.length-1])
-    if (nameNumber) {
-      nameParts[nameParts.length-1] = (nameNumber+1).toString();
-      newLine.name = nameParts.join(' ');
-    }
+    let newLine = new InitiativeLine(line);
 
     this.initiativeLines.splice(index+1, 0, newLine);
 
@@ -99,6 +102,18 @@ export class InitiativeTrackerComponent implements OnInit {
     if (this.activeLine >= this.initiativeLines.length) {
       this.activeLine = 0;
       this.round += 1;
+    }
+
+    let activeLine = this.initiativeLines[this.activeLine];
+
+    for (var index = 0; index < activeLine.conditions.length; index += 1) {
+      let condition = activeLine.conditions[index];
+
+      condition.rounds -= 1;
+      if (condition.rounds <= 0) {
+        activeLine.conditions.splice(index, 1);
+        index -= 1;
+      }
     }
   }
 
