@@ -1,8 +1,6 @@
 <div class="container-fluid">
 
-  <hr />
-
-  <div class="card" style="width: 40rem;">
+  <div class="card" style="width: 40rem; margin-top: 20px">
     <div class="card-body">
       <a (click)="copy()" href="javascript:void(0)" class="card-link float-right"><i class="far fa-copy"></i></a>
       <h4 class="card-title">Round: {{round}}</h4>
@@ -41,15 +39,15 @@
     </div>
   </div>
 
-  <hr />
+  <hr *ngIf="displayCopy" />
 
   <div *ngIf="displayCopy">
     <textarea id="copyTextarea" [value]="displayCopy"></textarea>
   </div>
 
-  <hr />
+  <hr *ngIf="displayCopy" />
 
-  <samp>
+  <samp *ngIf="displayCopy">
     {{initiativeLinesDisplay()}}
   </samp>
 

@@ -16,4 +16,26 @@
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="wrapper">
+
+    <nav href id="sidebar" [ngClass]="{ active: sidebarActive }" (click)="sidebarActive = sidebarActive">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header">
+            <iframe [src]="currentPlaylist.url" width="250" height="80" frameborder="0" allowtransparency="true"></iframe>
+        </div>
+
+        <div class="sidebar-body">
+            <!-- Sidebar Links -->
+            <ul class="list-unstyled components">
+                <li *ngFor="let playlist of playlists; let i = index" [ngClass]="{ active : currentPlaylist == playlist }">
+                    <a href="javascript:void(0)" (click)="selectPlaylist(i); $event.stopPropagation()">
+                        {{playlist.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <router-outlet id="content"></router-outlet>
+
+</div>
