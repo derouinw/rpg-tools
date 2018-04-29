@@ -1,3 +1,17 @@
+<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">{{title}}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form class="form-inline">
+      <button (click)="back()" class="btn btn-light" type="button"><i class="fas fa-chevron-left"></i></button>
+      <button (click)="forward()" class="btn btn-light" style="margin-left:10px;" type="button"><i class="fas fa-chevron-right"></i></button>
+    </form>
+  </div>
+</nav>
+
 <div class="container-fluid">
 
   <div class="card" style="width: 40rem; margin-top: 20px">

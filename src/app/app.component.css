@@ -68,7 +68,7 @@
 
 #sidebar .sidebar-body {
     overflow-y: scroll;
-    height: 85vh;
+    height: 78vh;
 }
 
 #sidebar.active a[aria-expanded="false"]::before, #sidebar.active a[aria-expanded="true"]::before {
@@ -160,6 +160,6 @@ ul.CTAs a {
     CONTENT STYLE
 ----------------------------------------------------- */
 #content {
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     transition: all 0.3s;
 }
